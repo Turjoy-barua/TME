@@ -1,0 +1,5 @@
+**exercice 3**
+
+1. ALT + F pour avancer ALT + B pour reculer 
+2. ALT + T
+6. La commande history affiche la liste numérotée de toutes les commandes enregistrées lors de tes sessions précédentes.
