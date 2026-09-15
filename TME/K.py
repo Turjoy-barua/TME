@@ -41,13 +41,14 @@ def trouver_nombre():
         proposition_joueur = int(input("Veuillez choisir un nombre entre 0 et 100"))
         if proposition_joueur > n:
             nb_coup += 1
-            print("plus grand")
+            print("plus petit")
             continue
 
         elif proposition_joueur < n:
             nb_coup += 1
-            print("plus petit")
+            print("plus grand")
             continue
         elif proposition_joueur == n:
-            print("Vous avez gagné, vous avez joué {nb_coup} coups")
+            print(f"Vous avez gagné, vous avez joué {nb_coup} coups")
+            break
 trouver_nombre()
