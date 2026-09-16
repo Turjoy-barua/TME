@@ -56,3 +56,18 @@ def combination_possible2(num: int) -> list:
             
         
 print(combination_possible2(19))
+
+
+
+def repetition(liste : list, k: int )-> list:
+    return [liste]*k
+print(repetition(3, 8))
+print(repetition(5, 0))
+print(repetition([1, 2, 3], 5))
+
+def repetition_bloc(l : list, k : int) -> list:
+    return l*k
+
+print(repetition_bloc(["chat", "thon", "loup"], 3))
+print(repetition_bloc([1, 2, 3], 5))
+print(repetition_bloc([1, 2, 3, 4, 5], 0))
