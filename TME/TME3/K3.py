@@ -11,4 +11,3 @@ print(demande_lettre())
 
 #------Ex 2 Q2---------
 
-add
