@@ -67,26 +67,33 @@ def indice_lettre(mot: str, char: str) -> list:
 
 # ------ex3-------
 
-def count_augmentation(file):
-    with open(file) as f:
-        numbers = f.read()
-    num_list = [int(num) for num in numbers.split()]
+def nb_increased(num_list: list) -> int:
+    """counts the numbers of increment between each numbers and the number after 
+
+    Args:
+        num_list (list): the list of the numbers
+
+    Returns:
+        int: the times it has increased
+    """
     increment = 0 
     for i in range(len(num_list)-1):
         if num_list[i] < num_list[i+1]:
             increment+=1
     return (increment)
-    
-
-count_augmentation("/Users/TURJOY/Documents/shared_university /TME/TME3/releve1.txt")
 
 
-def count_augementation_2(file):
-    
-    with open(file) as f:
-        numbers = f.read()
-    # writted nl for numbers list
-    nl = [int(num) for num in numbers.split()]
+
+
+def new_increased(nl: list) -> int:
+    """
+    Counts the number of increases between sums of a 3 measurement sliding window.
+    Args:
+        nl (list): the list of the number
+
+    Returns:
+        int : the number of increment of 3 mesurement sliding window
+    """
     increment = 0
     for i in range(len(nl)-1):
         if i+3 < len(nl):
@@ -96,5 +103,3 @@ def count_augementation_2(file):
                 increment += 1
             
     return (increment)
-count_augementation_2("/Users/TURJOY/Documents/shared_university /TME/TME3/releve1.txt")
-    
