@@ -20,7 +20,7 @@ retourne le mot decode.
         if x % 2 == 0:
             final += code[x+1] * int(code[x])
     return final
-print(decode_rle("4a3b1c3d"))
+#print(decode_rle("4a3b1c3d"))
 
 def encode_rle(char : str) -> str:
     """it une chaıne de caracteres et retourne le mot code
@@ -46,7 +46,7 @@ def encode_rle(char : str) -> str:
 
 
 
-print(encode_rle("aaaabbbccdddddddd"))
+#print(encode_rle("aaaabbbccdddddddd"))
 
 
 def demande_lettre():
@@ -62,6 +62,39 @@ def indice_lettre(mot: str, char: str) -> list:
             list_indice.append(i)
     return list_indice
 
-print(indice_lettre("baobab", 'b'))
+#print(indice_lettre("baobab", 'b'))
 
 
+# ------ex3-------
+
+def count_augmentation(file):
+    with open(file) as f:
+        numbers = f.read()
+    num_list = [int(num) for num in numbers.split()]
+    increment = 0 
+    for i in range(len(num_list)-1):
+        if num_list[i] < num_list[i+1]:
+            increment+=1
+    return (increment)
+    
+
+count_augmentation("/Users/TURJOY/Documents/shared_university /TME/TME3/releve1.txt")
+
+
+def count_augementation_2(file):
+    
+    with open(file) as f:
+        numbers = f.read()
+    # writted nl for numbers list
+    nl = [int(num) for num in numbers.split()]
+    increment = 0
+    for i in range(len(nl)-1):
+        if i+3 < len(nl):
+            window1 = nl[i] + nl[i+1] + nl[i+2]
+            window2 = nl[i+1] + nl[i+2] + nl[i+3]
+            if window2 > window1:
+                increment += 1
+            
+    return (increment)
+count_augementation_2("/Users/TURJOY/Documents/shared_university /TME/TME3/releve1.txt")
+    
