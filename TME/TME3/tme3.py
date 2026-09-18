@@ -63,3 +63,5 @@ def indice_lettre(mot: str, char: str) -> list:
     return list_indice
 
 print(indice_lettre("baobab", 'b'))
+
+
