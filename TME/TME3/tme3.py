@@ -28,10 +28,10 @@ def decode_rle(code: str) -> str:
 
 #---------------Question_2-----------
 def encode_rle(char : str) -> str:
-    """lit une chaîne de caracteres et retourne le mot code
+    """
+    lit une chaîne de caracteres et retourne le mot code
     Args:
         char (str): prendre le chaine de caractere
-
     Returns:
         str: retourne le code
     """
@@ -86,7 +86,6 @@ def decouvre(mot: str, list_indice: list) -> str:
 print(decouvre("baobab",[0,2,3,5]) == "b-ob-b")
 
 #---------------Question_4-----------
-
 """
 Ecrire le jeu du pendu qui demande  
 a un joueur un mot secret et demande 
@@ -105,10 +104,7 @@ Autre :
 Demander à Turjoy pour l'utilité de l'exerice 3 en-dessous et aussi se poser la question sur
 Challenge 1 -> devoir noté important -- Devoir à faire pour le 4 ou 5 octobre 2026
 """
-
-
-# ------ex3------- 
-
+#-----------ex4------------------------- 
 def nb_increased(num_list: list) -> int:
     """counts the numbers of increment between each numbers and the number after 
 
@@ -123,10 +119,6 @@ def nb_increased(num_list: list) -> int:
         if num_list[i] < num_list[i+1]:
             increment+=1
     return (increment)
-
-
-
-
 def new_increased(nl: list) -> int:
     """
     Counts the number of increases between sums of a 3 measurement sliding window.
