@@ -178,6 +178,41 @@ print(repetition_bloc([1, 2, 3], 5))
 print(repetition_bloc([1, 2, 3, 4, 5], 0))
 
 #----------Ex9----------------
+def pierre_feuille_ciseaux(l: list) -> int:
+    """
+    retourne le numéro du joueur gagnant (1 ou 2), 0 en cas
+    d'egalité et -1 si la liste est mal formée.
+    
+     La liste passée en paramètre représente les tours
+    de jeu, c'est une liste de couple de chaînes de caractère ('Pierrre', 'Feuille', 'Ciseau'), le premier 
+    elément correspond au choix du premier joueur et le deuxième celui du second joueur.
+    """
+    
+    if len(l) == 0:
+        return -1
 
+    score_joueur_1 = 0
+    score_joueur_2 = 0
+
+    for tour in l:
+        if len(tour) != 2:
+            return -1
+        choix_joueur_1, choix_joueur_2 = tour
+
+        if choix_joueur_1 == choix_joueur_2:
+            continue
+        elif (choix_joueur_1 == 'Pierre' and choix_joueur_2 == 'Ciseau') or \
+             (choix_joueur_1 == 'Feuille' and choix_joueur_2 == 'Pierre') or \
+             (choix_joueur_1 == 'Ciseau' and choix_joueur_2 == 'Feuille'):
+            score_joueur_1 += 1
+        else:
+            score_joueur_2 += 1
+
+    if score_joueur_1 > score_joueur_2:
+        return 1
+    elif score_joueur_2 > score_joueur_1:
+        return 2
+    else:
+        return 0
 
 
