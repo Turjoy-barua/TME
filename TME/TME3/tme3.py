@@ -9,29 +9,33 @@ Date creation: 17/09/2026
 #---------------Ex1------------
 #---------------Question_1-----------
 def decode_rle(code: str) -> str:
-    """ca prend une chaîne de caracteres qui contient une suite compos ́e d'un entier 
-    et d'un caract`ere et
+    """
+    Ceci prend une chaîne de caracteres qui 
+    contient une suite composé d'un entier 
+    et d'un caractère et
     retourne le mot décodé.
 
     Args:
         code (str): prend le code
 
-    Returns: le decodage
+    Returns: le décodage
     """
+
     final = ""
     print(code)
     for x in range(len(code)):
         if x % 2 == 0:
             final += code[x+1] * int(code[x])
     return final
-#print(decode_rle("4a3b1c3d"))
+
+print(decode_rle("4a3b1c3d"))
 
 #---------------Question_2-----------
 def encode_rle(char : str) -> str:
     """
     lit une chaîne de caracteres et retourne le mot code
     Args:
-        char (str): prendre le chaine de caractere
+        char (str): prendre le chaine de caractère
     Returns:
         str: retourne le code
     """
@@ -48,32 +52,49 @@ def encode_rle(char : str) -> str:
     encoded += str(count) + current_char
     return encoded
 
-#print(encode_rle("aaaabbbccdddddddd"))
+print(encode_rle("aaaabbbccdddddddd"))
 
 #---------------Ex2-------------
 #---------------Question_1-----------
 def demande_lettre():
+    """ 
+    Demande à l'utilisateur d'entrer une lettre 
+    et la retourne en minuscule.
+
+    Returns:
+        str: la lettre entrée en minuscule
+    """
     while True:
         lettre = input("Entrez une lettre : ")
         if lettre.isalpha():
-            print(lettre.lower())
+            return lettre.lower()
 
 #---------------Question_2-----------
 def indice_lettre(mot: str, char: str) -> list:
+    """
+    Args:
+        mot (str): prend un mot
+        char (str): prend une lettre
+    Returns:
+        list: la liste des indices de la lettre dans le mot
+    """
+
     list_indice: list = []
     for i in range(len(mot)):
         if mot[i] == char:
             list_indice.append(i)
     return list_indice
 
-#print(indice_lettre("baobab", 'b'))
+print(indice_lettre("baobab", 'b'))
 
 #---------------Question_3-----------
 def decouvre(mot: str, list_indice: list) -> str:
     """
     Args:
-        mot (str)
-        list_indice (list)
+        mot (str) : prend un mot
+        list_indice (list) : prend une liste d'indices
+    Returns:
+        str: le mot découvert
     """
     result = ""
     for i in range(len(mot)):
@@ -83,27 +104,42 @@ def decouvre(mot: str, list_indice: list) -> str:
             result += "-"
     return result
 
-print(decouvre("baobab",[0,2,3,5]) == "b-ob-b")
+print(decouvre("baobab",[0,2,3,5]))
 
 #---------------Question_4-----------
-"""
-Ecrire le jeu du pendu qui demande  
-a un joueur un mot secret et demande 
-à un autre de le découvrir en un nombre 
-de coup limité à 10.
-"""
 
-"""
-Pour exercice 4:
-Penser à utiliser les fonctions précédentes pour demander une lettre,
-trouver les indices de cette lettre dans le mot secret et afficher le mot découvert.
+def pendu(mot: str, max_coups: int) -> None:
+    """
+    Args:
+        mot (str): prend un mot
+        max_coups (int): prend un entier
+    Returns:
+        None: retourne None
+    """
 
-Penser à mettre des docstrings dans TME2 et TME3
+    coups_restants = max_coups
+    lettres_trouvees = []
+    while coups_restants > 0:
+        lettre = demande_lettre()
+        if lettre in lettres_trouvees:
+            print("Vous avez déjà trouvé cette lettre.")
+            continue
+        lettres_trouvees.append(lettre)
+        indices = indice_lettre(mot, lettre)
+        if indices:
+            print("Bien joué !")
+            print(decouvre(mot, indices))
+            if decouvre(mot, indices) == mot:
+                print("Félicitations ! Vous avez trouvé le mot.")
+                return
+        else:
+            coups_restants -= 1
+            print(f"Lettre incorrecte. Il vous reste {coups_restants} coups.")
+    print(f"Désolé, vous avez perdu. Le mot était : {mot}")
 
-Autre :
-Demander à Turjoy pour l'utilité de l'exerice 3 en-dessous et aussi se poser la question sur
-Challenge 1 -> devoir noté important -- Devoir à faire pour le 4 ou 5 octobre 2026
-"""
+print(pendu("baobab", 10))
+
+
 #-----------ex4------------------------- 
 def nb_increased(num_list: list) -> int:
     """counts the numbers of increment between each numbers and the number after 
