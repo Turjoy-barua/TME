@@ -66,7 +66,7 @@ def trouver_nombre():
     nb_coup = 0
     nb_coup_max = 10
 
-    while True:
+    while nb_coup < nb_coup_max:
         proposition_joueur = int(input("Veuillez choisir un nombre entre 0 et 100:  "))
         if proposition_joueur > n:
             nb_coup += 1
