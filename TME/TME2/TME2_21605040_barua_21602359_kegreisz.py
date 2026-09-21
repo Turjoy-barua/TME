@@ -1,10 +1,10 @@
 """
-Exercice: TP2.ex1
+Exercice: TME2
 Nom: BARUA et KEGREISZ
 Date creation: 19/09/2026 
 """
 
-from random import * 
+from random import randint
 #---------------Ex1------------
 def moyenne(mention: int) -> str:
     """
@@ -18,16 +18,20 @@ def moyenne(mention: int) -> str:
 
     if mention < 10 :
         return "Recalé(e)"
-    elif 10 < mention < 12:
+    elif 10 <= mention < 12:
         return "Mention passable"
-    elif 12 < mention < 14:
+    elif 12 <= mention < 14:
         return "Mention assez bien"
-    elif 14 < mention < 16:
+    elif 14 <= mention < 16:
         return "Mention bien"
     else:
-        return " Mention Très Bien"
-    
-print(moyenne(15))
+        return "Mention Très Bien"   
+assert moyenne(9.9) == "Recalé(e)"
+assert moyenne(11) == "Mention passable"
+assert moyenne(13) == "Mention assez bien"
+assert moyenne(15) == "Mention bien"
+assert moyenne(17) == "Mention Très Bien"
+
 
 #---------------Ex2-------------
 def ordre_alphabetique(alpha1: str, alpha2: str) -> str:
@@ -41,8 +45,9 @@ def ordre_alphabetique(alpha1: str, alpha2: str) -> str:
     if alpha1.lower() > alpha2.lower():
         return alpha2
     return alpha1
-
-print(ordre_alphabetique("papa", "maman"))
+assert ordre_alphabetique("papa", "maman") == "maman"
+assert ordre_alphabetique("Chat", "chien") == "Chat"
+assert ordre_alphabetique("abc", "abc") == "abc"
 
 #---------------Ex3-------------
 def somme_entier_pairs(n: int) -> int:
@@ -53,12 +58,14 @@ def somme_entier_pairs(n: int) -> int:
         int: la somme des entiers pairs de 0 à n
     """
     somme = 0
-    for i in range(n):
+    for i in range(n+1):
         if i % 2 == 0:
             somme += i
     return somme
 
-print(somme_entier_pairs(10))
+assert somme_entier_pairs(0) == 0
+assert somme_entier_pairs(5) == 6     
+assert somme_entier_pairs(10) == 30
 
 #------------Ex4-------------
 def divisible_2(n: int) -> int:
@@ -73,12 +80,38 @@ def divisible_2(n: int) -> int:
         n = n/2
         divide_time+=1
     return divide_time
-        
-print(divisible_2(100))
+assert divisible_2(100) == 2   
+assert divisible_2(8) == 3     
+assert divisible_2(7) == 0
 
 #------------Ex5-----------
-#-----Question_1/2-----------
-def trouver_nombre():
+#------------Question_1
+def trouver_nombre_1():
+    """
+     Demande à un joueur de trouver un nombre entre 0 et 100. 
+     La fonction affiche plus grand ou plus petit
+     si ce n'est pas le bon nombre.
+    """
+    n = randint(0, 100)
+    nb_coup = 0
+    while True:
+        proposition_joueur = int(input("Veuillez choisir un nombre entre 0 et 100:  "))
+        if proposition_joueur > n:
+            nb_coup += 1
+            print("plus petit")
+            continue
+
+        elif proposition_joueur < n:
+            nb_coup += 1
+            print("plus grand")
+            continue
+
+        elif proposition_joueur == n:
+            print(f"Vous avez gagné, vous avez joué {nb_coup} coups")
+            break
+#trouver_nombre_1()
+#------------Question_2
+def trouver_nombre_2():
     """
      Demande à un joueur de trouver un nombre entre 0 et 100. 
      La fonction affiche plus grand ou plus petit
@@ -92,12 +125,12 @@ def trouver_nombre():
     nb_coup = 0
     nb_coup_max = 10
 
-    while nb_coup < nb_coup_max:
+    while nb_coup <= nb_coup_max:
         proposition_joueur = int(input("Veuillez choisir un nombre entre 0 et 100:  "))
 
         if nb_coup == nb_coup_max:
             print("Vous avez perdu")
-            break
+            break 
 
         elif proposition_joueur > n:
             nb_coup += 1
@@ -112,8 +145,7 @@ def trouver_nombre():
         elif proposition_joueur == n:
             print(f"Vous avez gagné, vous avez joué {nb_coup} coups")
             break
-
-trouver_nombre()
+#trouver_nombre_2()
 
 #------------Ex6-------------
 #-----Question_1-----------
@@ -134,11 +166,16 @@ def combination_possible(num: int) -> list:
                         current_combination = (i, j)
                         combination.append(current_combination)
             return combination
-    else:
-        raise ValueError("number should be between 2 and 12")
 
+assert combination_possible(2) == [(1, 1)]
+assert sorted(combination_possible(4)) == [(1, 3), (2, 2), (3, 1)]
+assert len(combination_possible(7)) == 6
+""" 
+assert combination_possible(2) == [(1, 1)]
+assert sorted(combination_possible(4)) == [(1, 3), (2, 2), (3, 1)]
+assert len(combination_possible(7)) == 6 """
 #-----Question_2-----------
-def combination_possible2(num: int) -> list:
+def combination_possible_2(num: int) -> list:
     """ 
     Args:
         num (int): un entier entre 2 et 12
@@ -160,8 +197,11 @@ def combination_possible2(num: int) -> list:
         else:
             num: int = int(input("number should be between 2 and 12 -> "))
             continue
+assert combination_possible(2) == [(1, 1)]
+assert sorted(combination_possible(4)) == [(1, 3), (2, 2), (3, 1)]
+assert len(combination_possible(7)) == 6
 
-#-----Ex7-------------
+#-------------Ex7-------------
 #-------------Question_1----------
 def occurence_liste(l: list, element: int) -> int:
     """
@@ -176,7 +216,9 @@ def occurence_liste(l: list, element: int) -> int:
         if l[i] == element:
             cpt += 1
     return cpt
-
+lst = [1, 2, 3, 2, 4, 2]
+assert occurence_liste(lst, 2) == 3
+assert occurence_liste(lst, 5) == 0
 #------------Question_2----------
 def index_occurence_liste(l: list, element: int) -> list:
     """
@@ -192,7 +234,8 @@ def index_occurence_liste(l: list, element: int) -> list:
         if l[i] == element:
             index_liste.append(i)
     return index_liste
-
+assert index_occurence_liste(lst, 2) == [1, 3, 5]
+assert index_occurence_liste(lst, 5) == []
 #------------Question_3----------
 def occurence_liste_par_comprehension(l: list, element: int) -> int:
     """
@@ -216,6 +259,9 @@ def index_occurence_liste_par_comprehension(l: list, element: int) -> list:
         l'element dans la liste par compréhension
     """
     return [i for i in range(len(l)) if l[i] == element]
+assert occurence_liste_par_comprehension(lst, 2) == 3
+assert index_occurence_liste_par_comprehension(lst, 2) == [1, 3, 5]
+
 
 #------------Ex8-------------
 #-------------Question_1----------
@@ -228,9 +274,11 @@ def repetition(liste : list, k: int )-> list:
         list: retourne la liste répété k fois
     """
     return [liste]*k
-print(repetition(3, 8))
-print(repetition(5, 0))
-print(repetition([1, 2, 3], 5))
+assert repetition("thon", 4) == ["thon", "thon", "thon", "thon"]
+assert repetition(3, 8) == [3, 3, 3, 3, 3, 3, 3, 3]
+assert repetition(5, 0) == []
+assert repetition([1, 2, 3], 5) == [[1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3], [1, 2, 3]]
+assert repetition("a", 1) == ["a"]
 
 #-------------Question_2----------
 def repetition_bloc(l : list, k : int) -> list:
@@ -242,11 +290,16 @@ def repetition_bloc(l : list, k : int) -> list:
         list: retourne la liste répété k fois par bloc
     """
     return l*k
-
-print(repetition_bloc(["chat", "thon", "loup"], 3))
-print(repetition_bloc([1, 2, 3], 5))
-print(repetition_bloc([1, 2, 3, 4, 5], 0))
-
+assert repetition_bloc(["chat", "thon", "loup"], 3) == [
+    "chat", "thon", "loup",
+    "chat", "thon", "loup",
+    "chat", "thon", "loup"
+]
+assert repetition_bloc([1, 2, 3], 5) == [
+    1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3
+]
+assert repetition_bloc([1, 2, 3, 4, 5], 0) == []
+assert repetition_bloc([42], 2) == [42, 42]
 #----------Ex9----------------
 def pierre_feuille_ciseaux(l: list) -> int:
     """
@@ -287,4 +340,8 @@ def pierre_feuille_ciseaux(l: list) -> int:
     else:
         return 0
 
-
+assert pierre_feuille_ciseaux([("Pierre", "Ciseau"), ("Feuille", "Pierre")]) == 1
+assert pierre_feuille_ciseaux([("Pierre", "Feuille"), ("Ciseau", "Pierre")]) == 2
+assert pierre_feuille_ciseaux([("Pierre", "Pierre")]) == 0
+assert pierre_feuille_ciseaux([]) == -1
+assert pierre_feuille_ciseaux([("Pierre",)]) == -1
