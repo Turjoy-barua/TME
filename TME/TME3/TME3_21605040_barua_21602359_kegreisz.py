@@ -22,13 +22,13 @@ def decode_rle(code: str) -> str:
     """
 
     final = ""
-    print(code)
     for x in range(len(code)):
         if x % 2 == 0:
             final += code[x+1] * int(code[x])
     return final
-
-print(decode_rle("4a3b1c3d"))
+assert decode_rle("4a3b1c3d") == "aaaabbbcddd"
+assert decode_rle("1a1b1c") == "abc"
+assert decode_rle("0a3b") == "bbb"
 
 #---------------Question_2-----------
 def encode_rle(char : str) -> str:
@@ -51,8 +51,9 @@ def encode_rle(char : str) -> str:
             count = 1
     encoded += str(count) + current_char
     return encoded
-
-print(encode_rle("aaaabbbccdddddddd"))
+assert encode_rle("aaaabbbcddd") == "4a3b1c3d"
+assert encode_rle("abc") == "1a1b1c"
+assert encode_rle("a") == "1a"
 
 #---------------Ex2-------------
 #---------------Question_1-----------
@@ -84,8 +85,10 @@ def indice_lettre(mot: str, char: str) -> list:
         if mot[i] == char:
             list_indice.append(i)
     return list_indice
+assert indice_lettre("lalal", "a") == [1, 3]
+assert indice_lettre("baobab", "b") == [0, 3, 5]
+assert indice_lettre("baobab", "x") == []
 
-print(indice_lettre("baobab", 'b'))
 
 #---------------Question_3-----------
 def decouvre(mot: str, list_indice: list) -> str:
@@ -103,11 +106,10 @@ def decouvre(mot: str, list_indice: list) -> str:
         else:
             result += "-"
     return result
-
-print(decouvre("baobab",[0,2,3,5]))
+assert decouvre("baobab", [0, 2, 3, 5]) == "b-ob-b"
+assert decouvre("lalal", [1, 3]) == "-a-a-"
 
 #---------------Question_4-----------
-
 def pendu(mot: str, max_coups: int) -> None:
     """
     Args:
@@ -119,57 +121,30 @@ def pendu(mot: str, max_coups: int) -> None:
 
     coups_restants = max_coups
     lettres_trouvees = []
+    tout_indices = []
     while coups_restants > 0:
         lettre = demande_lettre()
+        
         if lettre in lettres_trouvees:
             print("Vous avez déjà trouvé cette lettre.")
             continue
+        
         lettres_trouvees.append(lettre)
         indices = indice_lettre(mot, lettre)
+        
         if indices:
             print("Bien joué !")
-            print(decouvre(mot, indices))
-            if decouvre(mot, indices) == mot:
+            tout_indices.extend(indices)
+            print(decouvre(mot, tout_indices))
+            
+            if decouvre(mot, tout_indices) == mot:
                 print("Félicitations ! Vous avez trouvé le mot.")
                 return
         else:
             coups_restants -= 1
             print(f"Lettre incorrecte. Il vous reste {coups_restants} coups.")
+            print(decouvre(mot, tout_indices))
     print(f"Désolé, vous avez perdu. Le mot était : {mot}")
 
-print(pendu("baobab", 10))
+#pendu("baobab", 10)
 
-
-#-----------ex4------------------------- 
-def nb_increased(num_list: list) -> int:
-    """counts the numbers of increment between each numbers and the number after 
-
-    Args:
-        num_list (list): the list of the numbers
-
-    Returns:
-        int: the times it has increased
-    """
-    increment = 0 
-    for i in range(len(num_list)-1):
-        if num_list[i] < num_list[i+1]:
-            increment+=1
-    return (increment)
-def new_increased(nl: list) -> int:
-    """
-    Counts the number of increases between sums of a 3 measurement sliding window.
-    Args:
-        nl (list): the list of the number
-
-    Returns:
-        int : the number of increment of 3 mesurement sliding window
-    """
-    increment = 0
-    for i in range(len(nl)-1):
-        if i+3 < len(nl):
-            window1 = nl[i] + nl[i+1] + nl[i+2]
-            window2 = nl[i+1] + nl[i+2] + nl[i+3]
-            if window2 > window1:
-                increment += 1
-            
-    return (increment)
