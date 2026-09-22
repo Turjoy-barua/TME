@@ -18,4 +18,7 @@ def decimal_to_binaire(nombre : int, nombre_de_bits : int):
     
     while len(binaire) < nombre_de_bits:
         binaire = "0" + binaire
-    return binaire
+    binaire = '0b' + binaire
+    print(binaire) 
+
+decimal_to_binaire(10, 8)
