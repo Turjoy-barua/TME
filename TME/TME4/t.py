@@ -116,4 +116,3 @@ persons = [
 ]
 
 print(enfant_par_personne(persons))
-def 
