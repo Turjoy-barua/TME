@@ -83,4 +83,4 @@ l'exemple de la liste precédente, la fonction retournera :
 3. la position a laquelle cette lettre se trouve (l'index de la lettre dans le mot) `
 La fonction retournera l'ensemble des mots répondant à ces critères
     """
-    def utilisateur
+    #def utilisateur
