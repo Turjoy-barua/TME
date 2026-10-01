@@ -62,7 +62,7 @@ def init_compte(tab: list, coordonnee: list):
         print("neighbour of: ",each_mine, " ", neighbour)
     return tab
 
-init_compte(init_plateau(10, 0), init_mine(init_plateau(10, 0),3))
+#init_compte(init_plateau(10, 0), init_mine(init_plateau(10, 0),3))
 
 
 
@@ -77,10 +77,51 @@ def print_mine(mine_list):
         for y in x:
             print(y, end=' ')
         print()
-print_mine(init_plateau_mine(10, 4))
+#print_mine(init_plateau_mine(10, 4))
 #print_mine(init_plateau(10, 'X'))
 from enum import Enum
 class Status(Enum):
     COVERED = 1
     UNCOVERED = 2
     MARK = 3
+    
+def affichage_plateau_jeu(size):
+    status_plateau = []
+    for i in range(size):
+        ligne = []
+        for j in range(size):
+            ligne.append(Status.COVERED)
+        status_plateau.append(ligne)
+    for x in status_plateau:
+            for y in x:
+                print(y, end='  ')
+            print() 
+            print(" ")
+            print(" ")
+            print(" ")
+
+    
+#affichage_plateau_jeu(5)
+
+
+
+
+
+
+
+
+def is_mine(cordoonne, plateau_jeu, plateau_statut):
+    x, y = cordoonne
+    if plateau_jeu[y][x] == 9:
+        return False
+    else:
+        return True
+    
+    
+def change_status(cordonne, plateau_jeu, plateau_statut):
+    x, y = cordonne
+    if plateau_statut[y][x] == Status.COVERED and plateau_statut[y][x] != Status.MARK:
+        plateau_statut[y][x] == Status.MARK
+    elif plateau_statut[y][x] == Status.MARK:
+        plateau_statut[y][x] == Status.COVERED
+        
