@@ -1,7 +1,17 @@
 import random
 
 def init_plateau(taille: int, valeur: int):
-    main_list = []
+    """prend une taille et une valeur et retourne un tableau carre dont toutes les cases sont
+    initialisées avec la valeur passée en paramètre.
+
+    Args:
+        taille (int): _description_
+        valeur (int): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    main_list: list = []
     for x in range(taille):
         main_list.append([])
         for y in range(taille):
@@ -10,30 +20,67 @@ def init_plateau(taille: int, valeur: int):
 
 
 
+
 def init_mine(tab: list, nb_mine: list):
-    length_tab = len(tab)
-    total_mine = 0
-    x_index = []
-    y_index = []
-    index_mine = []
+    length_tab: int = len(tab)
+    total_mine: int = 0
+    x_index: list = []
+    y_index: list = []
+    index_mine: list = []
     while total_mine <= nb_mine:
-        x = random.randint(0, length_tab-1)
-        y = random.randint(0, length_tab-1)
+        x: int = random.randint(1, length_tab)
+        y: int = random.randint(1, length_tab)
         if x not in index_mine and y not in index_mine:
             index_mine.append((x, y))
-        total_mine+=1
+        total_mine += 1
     for i in x_index:
         for j in y_index:
             tab[i][j] = 9
             index_mine.append((i, j))
     return index_mine
-
-tab = init_plateau(20, "x")
-
-print(init_mine(tab, 10))
+#print(init_mine(init_plateau(5, "x"), 3))
 
 
-for i in range(len(tab)):
-    for j in range(len(tab)):
-        print(tab[i][j], end=" ")
-    print()
+
+
+def liste_voisins(index: tuple, size: int):
+    possible_index: list = [1, 0,-1,]
+    mine_x, mine_y= index
+    voisin: list = []
+    for x in possible_index:
+        if 0 < mine_x + x <= size:
+            for y in possible_index:
+                if 0 < mine_y + y <= size and (mine_x+x, mine_y+y) != index:
+                    voisin.append((mine_x+x, mine_y+y))
+    return voisin
+    
+def init_compte(tab: list, coordonnee: list):
+    for each_mine in coordonnee:
+        neighbour = liste_voisins(each_mine, len(tab))
+        for x, y in neighbour:
+            tab[y-1][x-1] += 1
+        print("neighbour of: ",each_mine, " ", neighbour)
+    return tab
+
+init_compte(init_plateau(10, 0), init_mine(init_plateau(10, 0),3))
+
+
+
+def init_plateau_mine(taille: int , nb_mines: int):
+    plateau = init_plateau(taille, 0)
+    mine = init_mine(plateau, nb_mines)
+    final = init_compte(plateau, mine)
+    return final
+
+def print_mine(mine_list):
+    for x in mine_list:
+        for y in x:
+            print(y, end=' ')
+        print()
+print_mine(init_plateau_mine(10, 4))
+#print_mine(init_plateau(10, 'X'))
+from enum import Enum
+class Status(Enum):
+    COVERED = 1
+    UNCOVERED = 2
+    MARK = 3
