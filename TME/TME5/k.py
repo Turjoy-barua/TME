@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #------Demineur----------
 #------Question_1--------
 def init_plateau(t: int, v: int):
@@ -34,3 +35,5 @@ print(liste_voisins((1, 1), 2))
 #-----Question_4----------
 def init_compte():
     return
+=======
+>>>>>>> f01463829421b718baefcc3ecb3673d75844fef9
