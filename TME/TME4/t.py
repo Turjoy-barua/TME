@@ -115,4 +115,32 @@ persons = [
     }
 ]
 
-print(enfant_par_personne(persons))
+#print(enfant_par_personne(persons))
+
+
+
+def mot_croises(longeur: int, lettre: str, pos: int) -> dict:
+    f = open("/Users/TURJOY/Documents/shared_university /TME/TME4/liste-mots.txt")
+    text: str = str(f.read())
+    words_list: list = [word.lower() for word in text.split()]
+    words_dict: dict = {}
+    for word in words_list:
+        if len(word) in words_dict.keys():
+            words_dict[len(word)].append(word)
+        else:
+            words_dict.update({len(word): [word]})
+    matched_words : list = []
+    for key, value in words_dict.items():
+        if key == longeur:
+            for word in value:
+                if lettre in word:
+                    for i in range(len(word)):
+                        if word[i] == lettre and i == pos:
+                            matched_words.append(word)
+    for x in matched_words:
+        print(x)
+        #print(words_dict)
+mot_croises(13, "b", -1)
+
+
+
