@@ -103,13 +103,6 @@ def affichage_plateau_jeu(size):
     
 #affichage_plateau_jeu(5)
 
-
-
-
-
-
-
-
 def is_mine(cordoonne, plateau_jeu, plateau_statut):
     x, y = cordoonne
     if plateau_jeu[y][x] == 9:
