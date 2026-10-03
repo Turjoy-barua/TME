@@ -33,7 +33,7 @@ def init_plateau(taille: int, valeur: int)-> list:
 # print(init_plateau(5, 1))
 
 #-----------------Question_2----------
-def init_mine(tab: list, nb_mine: list)-> list:
+def init_mine(tab: list, nb_mine: int)-> list:
 
     """Initialise un certain nombre de mines sur le plateau de jeu.
     Args:
@@ -45,25 +45,20 @@ def init_mine(tab: list, nb_mine: list)-> list:
 
     length_tab: int = len(tab)
     total_mine: int = 0
-    x_index: list = []
-    y_index: list = []
     index_mine: list = []
-    while total_mine <= nb_mine:
-        x: int = random.randint(1, length_tab)
-        y: int = random.randint(1, length_tab)
-        if x not in index_mine and y not in index_mine:
+    while total_mine < nb_mine:
+        x: int = random.randint(0, length_tab-1)
+        y: int = random.randint(0, length_tab-1)
+        if (x, y) not in index_mine:
             index_mine.append((x, y))
-        total_mine += 1
-    for i in x_index:
-        for j in y_index:
-            tab[i][j] = 9
-            index_mine.append((i, j))
+            total_mine += 1
+            tab[x][y] = 9
     return index_mine
 
-#print(init_mine(init_plateau(10, 0), 3))
+# print(init_mine(init_plateau(10, 0), 3))
 
 #-----------------Question_3----------
-def liste_voisins(index: tuple, size: int):
+def liste_voisins(index: tuple, size: int)-> list:
     """Retourne la liste des coordonnées des cases voisines d'une case donnée sur le plateau de jeu.
 
     Args:
@@ -100,7 +95,7 @@ def init_compte(tab: list, coordonnee: list)-> list:
         neighbour = liste_voisins(each_mine, len(tab))
         for x, y in neighbour:
             tab[y-1][x-1] += 1
-        print("neighbour of: ",each_mine, " ", neighbour)
+        # print("neighbour of: ",each_mine, " ", neighbour)
     return tab
 
 #print(init_compte(init_plateau(10, 0), init_mine(init_plateau(10, 0), 3)))
@@ -147,26 +142,43 @@ class Status(Enum):
     MARK = 3
 
 #-----------------Question_2----------
-def affichage_plateau_jeu(size)-> None:
-    """Affiche le plateau de jeu avec l'état de chaque case (COVERED, UNCOVERED ou MARK).
+def init_statut(taille: int, statut: Status = Status.COVERED) -> list:
+    """Crée le tableau de statut, avec le même statut dans toutes les cases.
+    
+    Args:
+        taille (int): La taille du plateau (nombre de lignes et de colonnes).
+        statut (Status, optional): Le statut initial à attribuer à chaque case. Par défaut, Status.COVERED.
+    Returns:
+        list: Un tableau carré (liste de listes) représentant le statut de chaque case du plateau.
+    """
+    return init_plateau(taille, statut)
+
+
+def affichage_plateau_jeu(plateau_jeu: list, plateau_statut: list) -> None:
+    """Affiche le plateau selon le statut de chaque case.
+
+    '.' = cachée, 'M' = marquée, '*' = mine découverte, sinon le nombre de mines voisines.
 
     Args:
-        size (int): La taille du plateau (nombre de lignes et de colonnes).
+        plateau_jeu (list): Le plateau de jeu (liste de listes) contenant les mines et les comptes de mines.
+        plateau_statut (list): Le tableau de statut (liste de listes) indiquant l'état des cases (COVERED, UNCOVERED ou MARK).
     """
-
-    status_plateau = []
-    for i in range(size):
-        ligne = []
-        for j in range(size):
-            ligne.append(Status.COVERED)
-        status_plateau.append(ligne)
-    for x in status_plateau:
-            for y in x:
-                print(y, end='  ')
-            print() 
-            print(" ")
-            print(" ")
-            print(" ")
+    taille = len(plateau_jeu)
+    # ligne des numéros de colonnes
+    print("   " + " ".join(str(x) for x in range(taille)))
+    for y in range(taille):
+        print(str(y) + "  ", end="")
+        for x in range(taille):
+            if plateau_statut[y][x] == Status.COVERED:
+                symbole = "."
+            elif plateau_statut[y][x] == Status.MARK:
+                symbole = "M"
+            elif plateau_jeu[y][x] == 9:
+                symbole = "*"
+            else:
+                symbole = str(plateau_jeu[y][x])
+            print(symbole, end=" ")
+        print()
 
 #affichage_plateau_jeu(5)
 
@@ -174,23 +186,22 @@ def affichage_plateau_jeu(size)-> None:
     """
     Comment initialiser le tableau de statut pour voir tout le plateau ?
 
-    Réponse : On peut initialiser le tableau de statut en créant une liste de listes, 
-    où chaque sous-liste représente une ligne du plateau et 
-    chaque élément de la sous-liste représente l'état d'une case (COVERED, UNCOVERED ou MARK). 
-    On peut ensuite remplir ce tableau avec l'état initial (COVERED) pour toutes les cases du plateau.
+    Réponse : Pour voir tout le plateau, 
+    on initialise le tableau de statut avec UNCOVERED : 
+    statut = init_statut(taille, Status.UNCOVERED)
 
     """
 
 #------------------ex_3----------------
 #------------------Les_coups----------
 #-----------------Question_1----------
-def is_mine(cordoonne, plateau_jeu, plateau_statut)-> bool:
+def is_mine(cordoonne: tuple, plateau_jeu: list)-> bool:
     """Vérifie si une case donnée sur le plateau de jeu est une mine.
 
     Args:
         cordoonne (tuple): Les coordonnées de la case (x, y) à vérifier.
         plateau_jeu (list): Le plateau de jeu (liste de listes) contenant les mines et les comptes de mines.
-        plateau_statut (list): Le tableau de statut (liste de listes) indiquant l'état des cases (COVERED, UNCOVERED ou MARK).
+    
     Returns:
         bool: True si la case est une mine, False sinon.
     """
@@ -201,24 +212,21 @@ def is_mine(cordoonne, plateau_jeu, plateau_statut)-> bool:
         return False
 
 #------------------Question_2----------
-def change_status(cordonne, plateau_jeu, plateau_statut):
+def change_status(cordonne: tuple, plateau_statut: list)-> None:
     """Change l'état d'une case donnée sur le plateau de jeu.
 
     Args:
         cordonne (tuple): Les coordonnées de la case (x, y) dont on veut changer l'état.
-        plateau_jeu (list): Le plateau de jeu (liste de listes) contenant les mines et les comptes de mines.
         plateau_statut (list): Le tableau de statut (liste de listes) indiquant l'état des cases (COVERED, UNCOVERED ou MARK).
     """
     x, y = cordonne
     if plateau_statut[y][x] == Status.COVERED:
         plateau_statut[y][x] = Status.UNCOVERED
-    elif plateau_statut[y][x] == Status.UNCOVERED:
-        plateau_statut[y][x] = Status.MARK
     elif plateau_statut[y][x] == Status.MARK:
         plateau_statut[y][x] = Status.COVERED
 
 #------------------Question_3----------
-def decouvrir_voisins(cordonne, plateau_jeu, plateau_statut)-> bool:
+def decouvrir_voisins(coordonnee: tuple, plateau_jeu: list, plateau_statut: list)-> bool:
     """Découvre toutes les cases voisines d'une case donnée si le nombre de cases marquées est égal au nombre de mines voisines.
 
     Args:
@@ -228,42 +236,51 @@ def decouvrir_voisins(cordonne, plateau_jeu, plateau_statut)-> bool:
     Returns:
         bool: True si aucune mine n'est découverte, False sinon.
     """
-    x, y = cordonne
-    if plateau_jeu[y][x] == 9:
-        return False
-    else:
-        voisins = liste_voisins(cordonne, len(plateau_jeu))
-        for voisin in voisins:
-            vx, vy = voisin
-            if plateau_statut[vy][vx] == Status.COVERED:
-                plateau_statut[vy][vx] = Status.UNCOVERED
+    x, y = coordonnee
+    if plateau_statut[y][x] != Status.UNCOVERED:
+        return True
+    voisins = liste_voisins(coordonnee, len(plateau_jeu))
+    nb_marques = 0
+    for vx, vy in voisins:
+        if plateau_statut[vy][vx] == Status.MARK:
+            nb_marques += 1
+    if nb_marques != plateau_jeu[y][x]:
         return True
 
 #------------------ex_4----------------
 def main():
-    """Boucle principale du jeu de démineur. Gère l'interaction avec le joueur, les commandes et les actions dans le jeu."""
-    taille = 5
+    """Boucle principale du jeu."""
+    taille = 10
     nb_mines = 3
     plateau_jeu = init_plateau_mine(taille, nb_mines)
-    plateau_statut = [[Status.COVERED for _ in range(taille)] for _ in range(taille)]
+    plateau_statut = init_statut(taille)
+
     
     while True:
-        print_mine(plateau_statut)
-        action = input("Entrez l'action (d pour découvrir, m pour marquer) et les coordonnées (x y): ")
-        cmd, x, y = action.split()
-        x, y = int(x), int(y)
-        
-        if cmd == 'd':
-            if not decouvrir_voisins((x, y), plateau_jeu, plateau_statut):
-                print("Vous avez découvert une mine ! Game Over.")
-                break
-        elif cmd == 'm':
-            change_status((x, y), plateau_jeu, plateau_statut)
-        
-        # Vérifiez si le joueur a gagné
-        if all(plateau_statut[y][x] != Status.COVERED for y in range(taille) for x in range(taille) if plateau_jeu[y][x] != 9):
-            print("Félicitations ! Vous avez gagné !")
+        affichage_plateau_jeu(plateau_jeu, plateau_statut)
+        saisie = input("> ").split()
+
+        if saisie == ["q"]:
+            break
+     
+        if len(saisie) != 3 or saisie[0] not in ("d", "m", "v") \
+                or not saisie[1].isdigit() or not saisie[2].isdigit():
+            print("Commande invalide.")
+            continue
+        cmd, x, y = saisie[0], int(saisie[1]), int(saisie[2])
+        if x >= taille or y >= taille:
+            print("Coordonnées hors du plateau.")
+            continue
+
+        elif cmd == "m":
+            change_status((x, y), plateau_statut)
+        elif cmd == "v":
+            perdu = not decouvrir_voisins((x, y), plateau_jeu, plateau_statut)
+
+        if perdu:
+            print("Vous avez découvert une mine ! Game Over.")
+            affichage_plateau_jeu(plateau_jeu, init_statut(taille, Status.UNCOVERED))
             break
 
-
-# Pour l'instant, ne pas l'envoyer immédiatement.
+if __name__ == "__main__":
+    main()
