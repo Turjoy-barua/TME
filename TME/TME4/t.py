@@ -66,7 +66,7 @@ def mot_plus_utilise(fich)-> str:
                 
     return (mot)
     
-#mot_plus_utilise("/Users/TURJOY/Documents/shared_university /TME/TME4/miserables-chap1-tokenized.txt")
+mot_plus_utilise("/Users/TURJOY/Documents/shared_university /TME/TME4/miserables-chap1-tokenized.txt")
 
 
 
@@ -119,7 +119,7 @@ persons = [
 
 
 
-def mot_croises(longeur: int, lettre: str, pos: int) -> dict:
+def mot_croises(longeur: int, lettre: str, pos: int):
     f = open("/Users/TURJOY/Documents/shared_university /TME/TME4/liste-mots.txt")
     text: str = str(f.read())
     words_list: list = [word.lower() for word in text.split()]
@@ -137,10 +137,11 @@ def mot_croises(longeur: int, lettre: str, pos: int) -> dict:
                     for i in range(len(word)):
                         if word[i] == lettre and i == pos:
                             matched_words.append(word)
-    for x in matched_words:
-        print(x)
-        #print(words_dict)
-mot_croises(13, "b", -1)
+    return matched_words
+
+assert len(mot_croises(3, "a", 2)) == 37
+assert len(mot_croises(4, "w", 0)) == 5
+assert len(mot_croises(13, "b", 12)) == 0
 
 
 
