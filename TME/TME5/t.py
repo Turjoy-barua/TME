@@ -5,11 +5,11 @@ def init_plateau(taille: int, valeur: int):
     initialisées avec la valeur passée en paramètre.
 
     Args:
-        taille (int): _description_
-        valeur (int): _description_
+        taille (int): taille de plateau ex: 10X10
+        valeur (int): the valeur pour chaque case
 
     Returns:
-        _type_: _description_
+        list: le tableau cree
     """
     main_list: list = []
     for x in range(taille):
@@ -21,7 +21,16 @@ def init_plateau(taille: int, valeur: int):
 
 
 
-def init_mine(tab: list, nb_mine: list):
+def init_mine(tab: list, nb_mine: int):
+    """_summary_
+
+    Args:
+        tab (list): _description_
+        nb_mine (int): _description_
+
+    Returns:
+        _type_: _description_
+    """
     length_tab: int = len(tab)
     total_mine: int = 0
     x_index: list = []
@@ -44,6 +53,15 @@ def init_mine(tab: list, nb_mine: list):
 
 
 def liste_voisins(index: tuple, size: int):
+    """_summary_
+
+    Args:
+        index (tuple): _description_
+        size (int): _description_
+
+    Returns:
+        _type_: _description_
+    """
     possible_index: list = [1, 0,-1,]
     mine_x, mine_y= index
     voisin: list = []
@@ -55,6 +73,15 @@ def liste_voisins(index: tuple, size: int):
     return voisin
     
 def init_compte(tab: list, coordonnee: list):
+    """_summary_
+
+    Args:
+        tab (list): _description_
+        coordonnee (list): _description_
+
+    Returns:
+        _type_: _description_
+    """
     for each_mine in coordonnee:
         neighbour = liste_voisins(each_mine, len(tab))
         for x, y in neighbour:
@@ -67,6 +94,15 @@ def init_compte(tab: list, coordonnee: list):
 
 
 def init_plateau_mine(taille: int , nb_mines: int):
+    """_summary_
+
+    Args:
+        taille (int): _description_
+        nb_mines (int): _description_
+
+    Returns:
+        _type_: _description_
+    """
     plateau = init_plateau(taille, 0)
     mine = init_mine(plateau, nb_mines)
     final = init_compte(plateau, mine)
@@ -114,7 +150,12 @@ def is_mine(cordoonne, plateau_jeu, plateau_statut):
 def change_status(cordonne, plateau_jeu, plateau_statut):
     x, y = cordonne
     if plateau_statut[y][x] == Status.COVERED and plateau_statut[y][x] != Status.MARK:
-        plateau_statut[y][x] == Status.MARK
+        plateau_statut[y][x] = Status.MARK
     elif plateau_statut[y][x] == Status.MARK:
-        plateau_statut[y][x] == Status.COVERED
+        plateau_statut[y][x] = Status.COVERED
         
+
+
+def mine_decouvre(cordonne, plateau_jeu, plateau_statut):
+    size_plateau = len(plateau_jeu)
+     

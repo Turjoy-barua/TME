@@ -33,7 +33,7 @@ def init_plateau(taille: int, valeur: int)-> list:
 # print(init_plateau(5, 1))
 
 #-----------------Question_2----------
-def init_mine(tab: list, nb_mine: list)-> list:
+def init_mine(tab: list, nb_mine: int)-> list:
 
     """Initialise un certain nombre de mines sur le plateau de jeu.
     Args:
