@@ -194,12 +194,11 @@ def is_mine(cordoonne, plateau_jeu, plateau_statut)-> bool:
     Returns:
         bool: True si la case est une mine, False sinon.
     """
-    
     x, y = cordoonne
     if plateau_jeu[y][x] == 9:
-        return False
-    else:
         return True
+    else:
+        return False
 
 #------------------Question_2----------
 def change_status(cordonne, plateau_jeu, plateau_statut):
@@ -211,10 +210,60 @@ def change_status(cordonne, plateau_jeu, plateau_statut):
         plateau_statut (list): Le tableau de statut (liste de listes) indiquant l'état des cases (COVERED, UNCOVERED ou MARK).
     """
     x, y = cordonne
-    if plateau_statut[y][x] == Status.COVERED and plateau_statut[y][x] != Status.MARK:
-        plateau_statut[y][x] == Status.MARK
+    if plateau_statut[y][x] == Status.COVERED:
+        plateau_statut[y][x] = Status.UNCOVERED
+    elif plateau_statut[y][x] == Status.UNCOVERED:
+        plateau_statut[y][x] = Status.MARK
     elif plateau_statut[y][x] == Status.MARK:
-        plateau_statut[y][x] == Status.COVERED
+        plateau_statut[y][x] = Status.COVERED
 
 #------------------Question_3----------
-def 
+def decouvrir_voisins(cordonne, plateau_jeu, plateau_statut)-> bool:
+    """Découvre toutes les cases voisines d'une case donnée si le nombre de cases marquées est égal au nombre de mines voisines.
+
+    Args:
+        cordonne (tuple): Les coordonnées de la case (x, y) dont on veut découvrir les voisins.
+        plateau_jeu (list): Le plateau de jeu (liste de listes) contenant les mines et les comptes de mines.
+        plateau_statut (list): Le tableau de statut (liste de listes) indiquant l'état des cases (COVERED, UNCOVERED ou MARK).
+    Returns:
+        bool: True si aucune mine n'est découverte, False sinon.
+    """
+    x, y = cordonne
+    if plateau_jeu[y][x] == 9:
+        return False
+    else:
+        voisins = liste_voisins(cordonne, len(plateau_jeu))
+        for voisin in voisins:
+            vx, vy = voisin
+            if plateau_statut[vy][vx] == Status.COVERED:
+                plateau_statut[vy][vx] = Status.UNCOVERED
+        return True
+
+#------------------ex_4----------------
+def main():
+    """Boucle principale du jeu de démineur. Gère l'interaction avec le joueur, les commandes et les actions dans le jeu."""
+    taille = 5
+    nb_mines = 3
+    plateau_jeu = init_plateau_mine(taille, nb_mines)
+    plateau_statut = [[Status.COVERED for _ in range(taille)] for _ in range(taille)]
+    
+    while True:
+        print_mine(plateau_statut)
+        action = input("Entrez l'action (d pour découvrir, m pour marquer) et les coordonnées (x y): ")
+        cmd, x, y = action.split()
+        x, y = int(x), int(y)
+        
+        if cmd == 'd':
+            if not decouvrir_voisins((x, y), plateau_jeu, plateau_statut):
+                print("Vous avez découvert une mine ! Game Over.")
+                break
+        elif cmd == 'm':
+            change_status((x, y), plateau_jeu, plateau_statut)
+        
+        # Vérifiez si le joueur a gagné
+        if all(plateau_statut[y][x] != Status.COVERED for y in range(taille) for x in range(taille) if plateau_jeu[y][x] != 9):
+            print("Félicitations ! Vous avez gagné !")
+            break
+
+
+# Pour l'instant, ne pas l'envoyer immédiatement.

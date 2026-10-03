@@ -3,10 +3,10 @@
     "chat.editor.preferCopilotHarness": true,
     "python.REPL.enableREPLSmartSend": false,
     "github.copilot.enable": {
-        "*": true,
+        "*": false,
         "plaintext": true,
         "markdown": false,
         "scminput": false,
-        "python": true
+        "python": false
     }
 }
