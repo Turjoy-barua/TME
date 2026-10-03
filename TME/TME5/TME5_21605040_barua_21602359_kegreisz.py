@@ -163,10 +163,7 @@ def affichage_plateau_jeu(size)-> None:
     for x in status_plateau:
             for y in x:
                 print(y, end='  ')
-            print() 
-            print(" ")
-            print(" ")
-            print(" ")
+           
 
 #affichage_plateau_jeu(5)
 
@@ -265,5 +262,5 @@ def main():
             print("Félicitations ! Vous avez gagné !")
             break
 
-
+main()
 # Pour l'instant, ne pas l'envoyer immédiatement.
