@@ -19,9 +19,9 @@ def decimal_to_binaire(nombre : int, nombre_de_bits : int):
     while len(binaire) < nombre_de_bits:
         binaire = "0" + binaire
     binaire = "0b" + binaire 
-    print(binaire) 
+    return binaire
 
-decimal_to_binaire(-5, 8)
+print(decimal_to_binaire(-5, 8))
 
 
 def compter_les_mots(name : str):
@@ -39,7 +39,7 @@ def compter_les_mots(name : str):
         print(key, ':', value)
     return dico_mot
     
- # print(compter_les_mots(r"C:\Users\natha\OneDrive\Documents\Cours Informatique\UL1IN021\TME\TME4\miserables-chap1-tokenized.txt", "r"))
+# print(compter_les_mots("C:\Users\natha\OneDrive\Documents\Cours Informatique\UL1IN021\TME\TME4\miserables-chap1-tokenized.txt"))
 
 #------------------ex_4----------------
 #------------------Question_1----------
@@ -55,14 +55,15 @@ def personnes_familles(persons : list, name : str):
     Returns:
         list: Une liste contenant les enfants de la famille de la personne donnée.
     """
-    population = open(persons)
+    # population = open(persons)
     list_enfants = []
-    for person in population:
-        if person['parents'] == name:
-            list_enfants.append(person['name'])
+    for person in persons:
+        for surname in person['parents']:
+            if surname == name:
+                list_enfants.append(person['surname'])
     return list_enfants
 
- # print(personnes_familles((r"C:\Users\natha\OneDrive\Documents\Cours Informatique\TME-IN021\TME4\persons.py", "r"), 'Peter'))
+# print(personnes_familles("C:/Users/natha/OneDrive/Documents/Cours Informatique/UL1IN021/TME/TME4/personnes.json", "Jean"))
 
 #------------------Question_2---------- 
 def personnes_enfants(persons : list):
@@ -77,10 +78,9 @@ l'exemple de la liste precédente, la fonction retournera :
     return dico_enfants
 
 #------------------Ex_5----------------
-    """Ecrivez une fonction qui permet à un utilisateur qui fait des mots croisés de saisir trois paramètres :
+"""Ecrivez une fonction qui permet à un utilisateur qui fait des mots croisés de saisir trois paramètres :
 1. la longueur du mot qu'il cherche
 2. une lettre dont il sait qu'elle est dans le mot
 3. la position a laquelle cette lettre se trouve (l'index de la lettre dans le mot) `
 La fonction retournera l'ensemble des mots répondant à ces critères
     """
-    #def utilisateur

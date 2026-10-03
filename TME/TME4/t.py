@@ -47,7 +47,7 @@ def compte(nom):
     return counters
 
 
-""" counted_dict = (compte('/Users/TURJOY/Documents/shared_university /TME/TME4/miserables-chap1-tokenized.txt'))
+"""counted_dict = (compte('/Users/TURJOY/Documents/shared_university /TME/TME4/miserables-chap1-tokenized.txt'))
 for key, value in counted_dict.items():
     print(f"{key} : {value}") """
     
