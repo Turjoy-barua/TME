@@ -1,5 +1,12 @@
 {
     "github.copilot.completions.chat.enabled": true,
     "chat.editor.preferCopilotHarness": true,
-    "python.REPL.enableREPLSmartSend": false
+    "python.REPL.enableREPLSmartSend": false,
+    "github.copilot.enable": {
+        "plaintext": true,
+        "markdown": false,
+        "scminput": false,
+        "*": false,
+        "python": false
+    }
 }
