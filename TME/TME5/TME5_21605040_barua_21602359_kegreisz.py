@@ -163,17 +163,22 @@ def affichage_plateau_jeu(plateau_jeu: list, plateau_statut: list) -> None:
         plateau_jeu (list): Le plateau de jeu (liste de listes) contenant les mines et les comptes de mines.
         plateau_statut (list): Le tableau de statut (liste de listes) indiquant l'état des cases (COVERED, UNCOVERED ou MARK).
     """
-
-    status_plateau = []
-    for i in range(size):
-        ligne = []
-        for j in range(size):
-            ligne.append(Status.COVERED)
-        status_plateau.append(ligne)
-    for x in status_plateau:
-            for y in x:
-                print(y, end='  ')
-           
+    taille = len(plateau_jeu)
+    # ligne des numéros de colonnes
+    print("   " + " ".join(str(x) for x in range(taille)))
+    for y in range(taille):
+        print(str(y) + "  ", end="")
+        for x in range(taille):
+            if plateau_statut[y][x] == Status.COVERED:
+                symbole = "."
+            elif plateau_statut[y][x] == Status.MARK:
+                symbole = "M"
+            elif plateau_jeu[y][x] == 9:
+                symbole = "*"
+            else:
+                symbole = str(plateau_jeu[y][x])
+            print(symbole, end=" ")
+        print()
 
 #affichage_plateau_jeu(5)
 
@@ -277,5 +282,5 @@ def main():
             affichage_plateau_jeu(plateau_jeu, init_statut(taille, Status.UNCOVERED))
             break
 
-main()
-# Pour l'instant, ne pas l'envoyer immédiatement.
+if __name__ == "__main__":
+    main()
