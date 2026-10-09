@@ -96,3 +96,7 @@ def maximale(node : BinaryTreeNode):
     return node.data
 
 print(maximale(root))
+
+
+
+

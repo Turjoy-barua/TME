@@ -12,6 +12,8 @@ def insert(node : BinaryTreeNode, value: int) -> BinaryTreeNode:
     elif value > node.data:
         node.rightChild = insert(node.rightChild, value)
     return node
+
+
 root= insert(None,13)
 insert(root,10)
 insert(root,10)
@@ -34,23 +36,33 @@ assert root.leftChild.rightChild.data == 12
 def affica_arbre(node: BinaryTreeNode) -> int:
     if node is None:
         return 
-    affica_arbre(node.leftChild)
     print(node.data)
+    affica_arbre(node.leftChild)
     affica_arbre(node.rightChild)
     
 #affica_arbre(root)   
 
+def affica_arbre_croissant(node: BinaryTreeNode) -> int:
+    if node is None:
+        return 
+    affica_arbre_croissant(node.leftChild)
+    print(node.data)
+    affica_arbre_croissant(node.rightChild)
+    
+#affica_arbre_croissant(root)   
+    
 def cherche_elem(node: BinaryTreeNode, target) -> int:
     if node is None:
-            return None
+            return False
     elif node.data == target:
         return True
     elif node.data > target:
         return cherche_elem(node.leftChild, target)
-    else:
+    elif node.data < target:
         return cherche_elem(node.rightChild, target)
-        
-print(cherche_elem(root, 20))
+    else:
+        return False    
+#print(cherche_elem(root, 16))
 
 
 def mini(node: BinaryTreeNode):
@@ -59,11 +71,62 @@ def mini(node: BinaryTreeNode):
         current = current.leftChild
     return current.data
 
-print(mini(root))
+#print(mini(root))
 
 def maxi(node: BinaryTreeNode):
     current = node
     while current.rightChild is not None:
         current = current.rightChild
     return current.data
-print(maxi(root))
+#print(maxi(root))
+
+
+
+def hauteur(node: BinaryTreeNode) -> int:
+    if node is None:
+        return 0
+    return 1 + max(hauteur(node.leftChild), hauteur(node.rightChild))
+
+
+def rotation_droite(node : BinaryTreeNode) -> BinaryTreeNode:
+    gauche = node.leftChild
+    node.leftChild = gauche.rightChild
+    gauche.rightChile = node
+    return gauche
+
+
+
+def rotation_gauche(node: BinaryTreeNode) -> BinaryTreeNode:
+    droite = node.rightChild
+    node.rightChild = droite.leftChile
+    droite.leftChild = node
+    return droite
+    
+def equilibre(node: BinaryTreeNode, value: int) -> BinaryTreeNode:
+    if node is None:
+        return BinaryTreeNode(value)
+    if value < node.data:
+        node.leftChild = equilibre(node.leftChild, value)
+    elif value > node.data:
+        node.rightChild = equilibre(node.rightChild, value)
+    else:
+        return node
+    
+    gauche = node.leftChild
+    droite = node.rightChild
+    
+    difference = hauteur(gauche) - hauteur(droite)
+    
+    if difference == 2:
+        g = gauche.leftChild
+        d = gauche.rightChild
+        if hauteur(g) < hauteur(d):
+            node.leftChild = rotation_gauche(gauche)
+        return rotation_droite(node)
+    if difference == -2:
+        g = droite.leftChild
+        d = droite.rightChile
+        if hauteur(droite.rightChild) < hauteur(droite.leftChild):
+            node.rightChild = rotation_droite(droite)
+        return rotation_gauche(node)
+    return node

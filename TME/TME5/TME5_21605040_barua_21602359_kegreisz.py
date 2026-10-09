@@ -33,7 +33,7 @@ def init_plateau(taille: int, valeur: int)-> list:
 # print(init_plateau(5, 1))
 
 #-----------------Question_2----------
-def init_mine(tab: list, nb_mine: int)-> list:
+def init_mine(plateau: list, nb_mine: int)-> list:
 
     """Initialise un certain nombre de mines sur le plateau de jeu.
     Args:
@@ -43,7 +43,7 @@ def init_mine(tab: list, nb_mine: int)-> list:
         list: Une liste contenant les coordonnées des mines placées sur le plateau.
     """
 
-    length_tab: int = len(tab)
+    length_tab: int = len(plateau)
     total_mine: int = 0
     index_mine: list = []
     while total_mine < nb_mine:
@@ -52,10 +52,9 @@ def init_mine(tab: list, nb_mine: int)-> list:
         if (x, y) not in index_mine:
             index_mine.append((x, y))
             total_mine += 1
-            tab[x][y] = 9
+            plateau[x][y] = 9
     return index_mine
 
-# print(init_mine(init_plateau(10, 0), 3))
 
 #-----------------Question_3----------
 def liste_voisins(index: tuple, size: int)-> list:
@@ -78,7 +77,6 @@ def liste_voisins(index: tuple, size: int)-> list:
                     voisin.append((mine_x+x, mine_y+y))
     return voisin
 
-#print(liste_voisins((1, 1), 2))
 
 
 #-----------------Question_4----------
@@ -142,7 +140,7 @@ class Status(Enum):
     MARK = 3
 
 #-----------------Question_2----------
-def init_statut(taille: int, statut: Status = Status.COVERED) -> list:
+def init_statut(taille: int, statut: Status = Status.COVERED):
     """Crée le tableau de statut, avec le même statut dans toutes les cases.
     
     Args:
@@ -151,7 +149,7 @@ def init_statut(taille: int, statut: Status = Status.COVERED) -> list:
     Returns:
         list: Un tableau carré (liste de listes) représentant le statut de chaque case du plateau.
     """
-    return init_plateau(taille, statut)
+    return init_plateau(taille, statut) # type: ignore
 
 
 def affichage_plateau_jeu(plateau_jeu: list, plateau_statut: list) -> None:
@@ -254,7 +252,7 @@ def main():
     nb_mines = 3
     plateau_jeu = init_plateau_mine(taille, nb_mines)
     plateau_statut = init_statut(taille)
-
+    perdu = False
     
     while True:
         affichage_plateau_jeu(plateau_jeu, plateau_statut)
