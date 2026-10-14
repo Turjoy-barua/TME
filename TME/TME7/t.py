@@ -3,6 +3,9 @@ def lgr(s):
         return 0
     return 1+ lgr(s[1:])
 
+
+
+
 def fibonacci(n):
     if n == 1:
         return 1
@@ -12,5 +15,10 @@ def fibonacci(n):
 
 print(fibonacci(4))
 
+
+
+
+
+import pygame
 
 
