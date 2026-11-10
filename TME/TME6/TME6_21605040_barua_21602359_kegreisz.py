@@ -97,6 +97,63 @@ def maximale(node : BinaryTreeNode):
 
 print(maximale(root))
 
+#---------ex_5-----------
+#--------Question_1------
 
+"""
+4(2(1, 3), 8(6(5, 7), 9(-, 10)))
 
+Il est équilibré en chaque nœud, les hauteurs des sous-arbres diffèrent
+ d'au plus 1. Mais, il n'est pas parfaitement équilibré. 
+ Par exemple: en 8, le sous-arbre gauche a 3 nœuds et le droit en a 2.
+ Et en 9 le sous-arbre gauche est vide alors que le droit en a 1.
+"""
+#---------Question_2-------
+def hauteur(node: BinaryTreeNode) -> int:
+    if node is None:
+        return 0
+    return 1 + max(hauteur(node.leftChild), hauteur(node.rightChild))
 
+#---------Question_3-------
+def rotation_droite(node : BinaryTreeNode) -> BinaryTreeNode:
+    gauche = node.leftChild
+    node.leftChild = gauche.rightChild
+    gauche.rightChild = node
+    return gauche
+
+#---------Question_4-------
+def rotation_gauche(node: BinaryTreeNode) -> BinaryTreeNode:
+    droite = node.rightChild
+    node.rightChild = droite.leftChild
+    droite.leftChild = node
+    return droite
+
+#---------Question_5-------
+def equilibre(node: BinaryTreeNode, value: int) -> BinaryTreeNode:
+    if node is None:
+        return BinaryTreeNode(value)
+    if value < node.data:
+        node.leftChild = equilibre(node.leftChild, value)
+    elif value > node.data:
+        node.rightChild = equilibre(node.rightChild, value)
+    else:
+        return node
+    
+    gauche = node.leftChild
+    droite = node.rightChild
+    
+    difference = hauteur(gauche) - hauteur(droite)
+    
+    if difference == 2:
+        g = gauche.leftChild
+        d = gauche.rightChild
+        if hauteur(g) < hauteur(d):
+            node.leftChild = rotation_gauche(gauche)
+        return rotation_droite(node)
+    if difference == -2:
+        g = droite.leftChild
+        d = droite.rightChild
+        if hauteur(droite.rightChild) < hauteur(droite.leftChild):
+            node.rightChild = rotation_droite(droite)
+        return rotation_gauche(node)
+    return node
